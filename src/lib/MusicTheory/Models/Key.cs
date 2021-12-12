@@ -67,15 +67,21 @@ namespace MusicTheory.Models
             _ => this
         };
 
-        public KeyNote Flatten() => NoteType switch
+        public KeyNote Flatten() 
         {
-            Models.NoteType.Natural => this with { NoteType = Models.NoteType.Flat },
-            Models.NoteType.Flat => this with { NoteType = Models.NoteType.DoubleFlat},
-            Models.NoteType.DoubleFlat => new KeyNote(PreviousNote(), Models.NoteType.Natural),
-            Models.NoteType.Sharp => this with { NoteType = Models.NoteType.Natural },
-            Models.NoteType.DoubleSharp => this with { NoteType = Models.NoteType.Sharp },
-            _ => this
-        };
+            var isHalfStep = Note == Note.B || Note == Note.E;
+
+            return NoteType switch
+            {
+                Models.NoteType.Natural when !isHalfStep => this with { NoteType = Models.NoteType.Flat },
+                Models.NoteType.Natural when isHalfStep => new KeyNote(PreviousNote(), NoteType.Natural),
+                Models.NoteType.Flat => this with { NoteType = Models.NoteType.DoubleFlat},
+                Models.NoteType.DoubleFlat => new KeyNote(PreviousNote(), Models.NoteType.Natural),
+                Models.NoteType.Sharp => this with { NoteType = Models.NoteType.Natural },
+                Models.NoteType.DoubleSharp => this with { NoteType = Models.NoteType.Sharp },
+                _ => this
+            };
+        }
 
         public string Stringify(bool ignoreNaturalSign = true) => ToString(ignoreNaturalSign);
 
@@ -106,12 +112,12 @@ namespace MusicTheory.Models
                 {
                     case Models.NoteType.DoubleFlat:
                         note = note == Models.Note.A ? Models.Note.G : (Models.Note)((int)note - 1);
-                        noteType = Models.NoteType.Natural;
+                        noteType = note == Note.E || note == Note.B ? Models.NoteType.Flat : Models.NoteType.Natural;
                         break;
 
                     case Models.NoteType.DoubleSharp:
                         note = note == Models.Note.G ? Models.Note.A : (Models.Note)((int)note + 1);
-                        noteType = Models.NoteType.Natural;
+                        noteType = note == Note.F || note == Note.C ? Models.NoteType.Sharp : Models.NoteType.Natural;
                         break;
                 }
             }
