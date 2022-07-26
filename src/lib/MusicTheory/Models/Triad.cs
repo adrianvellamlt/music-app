@@ -306,9 +306,13 @@ namespace MusicTheory.Models
                 {
                     if (extension < (byte)Extension.Nineth) continue;
 
+                    var noteType = Extensions[extension];
+
                     if (adds != string.Empty || !Extensions.ContainsKey((byte)(extension - 2)))
                     {
-                        adds += " add" + (byte)extension;
+                        var noteTypeStr = noteType == NoteType.Natural ? string.Empty : noteType.Stringify();
+
+                        adds += " add" + noteTypeStr + (byte)extension;
                     }
                     // if it already has add notes then prev is already set;
                     else if (adds == string.Empty)

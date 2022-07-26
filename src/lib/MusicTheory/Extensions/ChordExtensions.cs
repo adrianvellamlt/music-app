@@ -60,6 +60,7 @@ namespace MusicTheory.Extensions
             Scale.Name.JazzMelodic => "Jazz Melodic Minor",
             Scale.Name.WholeHalfDiminished => "Whole Half Diminished",
             Scale.Name.HalfWholeDiminished => "Half Whole Diminished",
+            Scale.Name.Altered => "Altered",
             _ => "Unknown"
         };
         public static string Stringify(this ICollection<NoteSpelling> ScaleSpelling, bool addTonic = false)

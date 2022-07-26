@@ -80,7 +80,9 @@ namespace MusicTheory.Models
             [EnumMember(Value = "whole-half-diminished")]
             WholeHalfDiminished,
             [EnumMember(Value = "half-whole-diminished")]
-            HalfWholeDiminished
+            HalfWholeDiminished,
+            [EnumMember]
+            Altered
         }
 
         public static IDictionary<Name, ICollection<NoteSpelling>> Spellings =
@@ -256,6 +258,16 @@ namespace MusicTheory.Models
                     new NoteSpelling(5, NoteType.Natural),
                     new NoteSpelling(6, NoteType.Natural),
                     new NoteSpelling(7, NoteType.Flat)
+                },
+                [Name.Altered] = new NoteSpelling[]
+                {
+                    new NoteSpelling(1, NoteType.Natural),
+                    new NoteSpelling(2, NoteType.Flat),
+                    new NoteSpelling(2, NoteType.Sharp),
+                    new NoteSpelling(3, NoteType.Natural),
+                    new NoteSpelling(4, NoteType.Sharp),
+                    new NoteSpelling(5, NoteType.Sharp),
+                    new NoteSpelling(7, NoteType.Flat),
                 }
             };
 
